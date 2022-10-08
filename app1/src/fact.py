@@ -11,9 +11,10 @@ import sys
 def factorielle(a):
     if a < 0:
         return 'undefined'
-    if a < 2:
-        return 1
-    return a*factorielle(a-1)
+    p = a
+    for i in range(1, a):
+        p *= i
+    return p
 
 def cmd_fact(n):
     return str(factorielle(n))
