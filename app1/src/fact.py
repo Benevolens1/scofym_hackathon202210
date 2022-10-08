@@ -12,6 +12,8 @@ def factorielle(a):
     if a < 0:
         return 'undefined'
     p = a
+    if a == 0:
+        return 1
     for i in range(1, a):
         p *= i
     return p
