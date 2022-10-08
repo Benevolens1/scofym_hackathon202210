@@ -1,3 +1,4 @@
+from math import sqrt as sqrt
 """
 Command: prime_numbers
 Return a list of all the prime numbers inferior or equal to n
@@ -5,7 +6,7 @@ Return a list of all the prime numbers inferior or equal to n
 def prime_numbers(n):
     
     def is_prime(n):
-        if n < 2:
+        if sqrt(n) < 2:
             return False
         for i in range(2,n):
             if (n%i) == 0:

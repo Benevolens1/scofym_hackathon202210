@@ -9,7 +9,7 @@ from x_max import get_x_max
 
 from store_price import clone_product, sum_of_prices, delete_product
 from prime_numbers import prime_numbers, sum_prime_numbers
-from transport_stream import parse_transport_stream
+from transport_streams import parse_transport_stream
 from sink_aggregation import sink_aggregation
 
 # See README.md for details
