@@ -46,31 +46,21 @@ MONGO_DB_COLLECTION_NAME = "wifi"
 # Main function
 def sink_aggregation(json_data):
     aggregate_data = {
-        "identifier": None,
-        "manufacturerName": None,
-        "startTime": None,
-        "endTime": None,
+        "identifier": json_data["info"]["identifier"],
+        "manufacturerName": json_data["info"]["manufacturerName"],
+        "startTime": find_min(json_data["wifiData"],"eventTime"),
+        "endTime": find_max(json_data["wifiData"],"eventTime"),
         "wifiAggregate": {
-            "deviceType" : None,
-            "minRSSI": None,
-            "avgRSSI": None,
-            "maxRSSI": None,
-            "countBandChange" : None
+            "deviceType" : json_data["wifiData"][0]["deviceType"],
+            "minRSSI": find_min(json_data["wifiData"],"rssi"),
+            "avgRSSI": calculate_avg(json_data["wifiData"],"rssi"),
+            "maxRSSI": find_max(json_data["wifiData"],"rssi"),
+            "countBandChange" : count_value_change(json_data["wifiData"],"connection")
         },
-        "anomalies_report" : []
+        "anomalies_report" : detect_anomaly_min(json_data["wifiData"],"rssi",RSSITHRESHOLD)
     }
-    aggregate_data["identifier"] = json_data["info"]["identifier"]
-    aggregate_data["manufacturerName"] = json_data["info"]["manufacturerName"]
-    aggregate_data["startTime"] = find_min(json_data["wifiData"],"eventTime")
-    aggregate_data["endTime"] = find_max(json_data["wifiData"],"eventTime")
-    aggregate_data["wifiAggregate"]["deviceType"] = json_data["wifiData"][0]["deviceType"]
-    aggregate_data["wifiAggregate"]["countBandChange"] = count_value_change(json_data["wifiData"],"connection")
-    aggregate_data["wifiAggregate"]["minRSSI"] = find_min(json_data["wifiData"],"rssi")
-    aggregate_data["wifiAggregate"]["maxRSSI"] = find_max(json_data["wifiData"],"rssi")
-    aggregate_data["wifiAggregate"]["avgRSSI"] = calculate_avg(json_data["wifiData"],"rssi")
-    aggregate_data["anomalies_report"] = detect_anomaly_min(json_data["wifiData"],"rssi",RSSITHRESHOLD)
 
-    identifier_data = json_data["info"]["identifier"]
+    identifier_data = aggregate_data.get("identifier")
 
     # Mongo Insert data into mongoDB
     try:
