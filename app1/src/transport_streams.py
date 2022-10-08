@@ -1,8 +1,6 @@
 """
-
 This file is used to parse the mpeg-ts file in order to get the
 delta between PCR and PTS and in order to get stream element statistics
-
 MPEG-TS stream is the usual format used for IPTV (TV over IP), the format
 is basic, here some elements:
     - MPEG-TS is composed of 188 Bytes packets;
@@ -16,7 +14,6 @@ is basic, here some elements:
     - During streaming (real time), the delta between the packet arrival
     and the PCR is very important, this is something usually monitored
     in the stream pipeline.
-
 """
 
 import sys
@@ -497,5 +494,3 @@ def parse_transport_stream(filename):
     stats = getPidStats(pesPidList, pcr, pts)
     logging.info (stats)
     return stats
-
-

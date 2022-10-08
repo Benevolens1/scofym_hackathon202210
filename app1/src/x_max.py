@@ -45,11 +45,3 @@ def get_x_max(path,n):
         s=s.replace("("+str(max)+");","").replace(";("+str(max)+")","")
 
     return str(keys)
-
-
-
-
-
-
-
-

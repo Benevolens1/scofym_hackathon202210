@@ -1,4 +1,3 @@
-import cython
 import sys
 """ 
 #### factorial function example ### 
@@ -18,4 +17,3 @@ def factorielle(a):
 
 def cmd_fact(n):
     return str(factorielle(n))
-
